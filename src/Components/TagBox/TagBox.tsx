@@ -12,7 +12,7 @@ const TagBox = (props: TagBoxProps) => {
     }
 
     return (
-        <div onClick={props.takeBone} className={styles.box}>
+        <div onClick={props.takeBone} className={props.num === null ? styles['box-dummy'] : styles.box}>
             <h2>{props.num}</h2>
         </div>
     )
