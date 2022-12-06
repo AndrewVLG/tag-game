@@ -1,0 +1,14 @@
+.box {
+
+    color: brown;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0.7%;
+    width: 6.8vw;
+    height: 6.8vw;
+    background-color: wheat;
+    border: 2px solid brown;
+
+}
+

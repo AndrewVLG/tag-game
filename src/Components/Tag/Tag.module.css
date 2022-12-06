@@ -1,0 +1,20 @@
+
+.tag-wrap {
+    display: flex;
+
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 15vh;
+    margin-left: 30vw;
+    height: 30vw;
+    width: 30vw;
+    background-color: #f7f7ff;
+    box-shadow: 4px 4px 26px 0px rgba(34, 60, 80, 0.2);
+}
+
+@media (max-width: 600px) {
+    .tag-wrap {
+        height: 30vh;
+        width: 30vh;
+    }
+}
