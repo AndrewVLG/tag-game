@@ -8,6 +8,10 @@ interface Hand {
     isTook: boolean,
 }
 
+interface Pos {
+    currentArray: number,
+    posInArray: number,
+}
 
 const Tag = () => {
     const [hand, setHand] = useState({
@@ -16,7 +20,36 @@ const Tag = () => {
     });
     const [bonesArray, setBonesArray] = useState([[15, 14, 13, 12], [11, 10, 9, 8], [7, 6, 5, 4], [3, 2, 1, null]]);
 
-    const takeBone = (boneNumber: number) => {
+    const takeBone = (boneNumber: number, array: (number | null)[][]) => {
+        console.log(boneNumber)
+        const position: Pos = {
+            currentArray: 0,
+            posInArray: 0,
+
+        };
+        
+        array.forEach((item, i) => {
+            if(item.includes(boneNumber)) {
+                position.currentArray = i;
+                position.posInArray = item.indexOf(boneNumber);
+            }
+        } );
+        try {
+            if(array[position.currentArray][position.posInArray + 1] === null || array[position.currentArray][position.posInArray - 1] === null) {
+                setHand({inHand: boneNumber, isTook: true});
+            } else if(array[position.currentArray - 1][position.posInArray] === null) {
+                setHand({inHand: boneNumber, isTook: true});
+            } else if(array[position.currentArray + 1][position.posInArray] === null) {
+                setHand({inHand: boneNumber, isTook: true});
+            }
+        } catch {
+            if(array[position.currentArray + 1][position.posInArray] === null) {
+                setHand({inHand: boneNumber, isTook: true});
+            }
+        }
+
+
+
 
     }
 
@@ -36,7 +69,12 @@ const Tag = () => {
                 arrayC[i] = boneNumber;
             }
         }
-        setBonesArray([...arrayC]);
+        setBonesArray([
+            [arrayC[0], arrayC[1], arrayC[2], arrayC[3]], 
+            [arrayC[4], arrayC[5], arrayC[6], arrayC[7]], 
+            [arrayC[8], arrayC[9], arrayC[10], arrayC[11]], 
+            [arrayC[12], arrayC[13], arrayC[14], arrayC[15]]
+        ]);
     }
 
     const tagBones = bonesArray.flat().map(bone => {
@@ -44,7 +82,7 @@ const Tag = () => {
             return <TagBox takeBone={() => moveBone(hand.inHand, bonesArray.flat())} num={null}/>;
         };
 
-     return <TagBox takeBone={() => setHand({inHand: bone, isTook: true})} num={bone}/>
+     return <TagBox takeBone={() => takeBone(bone, bonesArray)} num={bone}/>
     })
     return (
         <div className={styles['tag-wrap']}>
