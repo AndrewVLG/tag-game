@@ -1,12 +1,8 @@
-import TagBox from '../TagBox/TagBox';
+import TagBone from '../TagBone/TagBone';
 import styles from './Tag.module.css';
-import { useState } from 'react';
-import { type } from 'os';
-
-interface Hand {
-    inHand: number | null,
-    isTook: boolean,
-}
+import {Snackbar, Alert} from '@mui/material';
+import { useState, useEffect } from 'react';
+import utilits from '../../utilits/utilits';
 
 interface Pos {
     currentArray: number,
@@ -14,12 +10,16 @@ interface Pos {
 }
 
 const Tag = () => {
+    const {makeRandomArray, checkCombination} = utilits();
     const [hand, setHand] = useState({
         inHand: 0,
         isTook: false,
     });
-    const [bonesArray, setBonesArray] = useState([[15, 14, 13, 12], [11, 10, 9, 8], [7, 6, 5, 4], [3, 2, 1, null]]);
-
+    const [bonesArray, setBonesArray] = useState([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, null, 15]]);
+    const isWin = checkCombination(bonesArray);
+    useEffect(() => {
+        setBonesArray(makeRandomArray())
+    }, [])
     const takeBone = (boneNumber: number, array: (number | null)[][]) => {
         console.log(boneNumber)
         const position: Pos = {
@@ -47,14 +47,10 @@ const Tag = () => {
                 setHand({inHand: boneNumber, isTook: true});
             }
         }
-
-
-
-
     }
 
     const moveBone = (boneNumber: number, array: any) => {
-        if(boneNumber === 0) {
+        if(boneNumber === 0 || !hand.isTook) {
             return;
         }
         const index = array.indexOf(boneNumber);
@@ -75,18 +71,22 @@ const Tag = () => {
             [arrayC[8], arrayC[9], arrayC[10], arrayC[11]], 
             [arrayC[12], arrayC[13], arrayC[14], arrayC[15]]
         ]);
+        setHand({...hand, isTook: false})
     }
 
     const tagBones = bonesArray.flat().map(bone => {
         if(bone === null) {
-            return <TagBox takeBone={() => moveBone(hand.inHand, bonesArray.flat())} num={null}/>;
+            return <TagBone key={Math.random() * (1000 - 10) + 10} takeBone={() => moveBone(hand.inHand, bonesArray.flat())} num={null}/>;
         };
 
-     return <TagBox takeBone={() => takeBone(bone, bonesArray)} num={bone}/>
+     return <TagBone key={Math.random() * (1000 - 10) + 10} takeBone={() => takeBone(bone, bonesArray)} num={bone}/>
     })
     return (
         <div className={styles['tag-wrap']}>
             {tagBones}
+            <Snackbar open={isWin}>
+                <Alert>You Win!</Alert>
+            </Snackbar>
         </div>
     )
 }
