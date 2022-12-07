@@ -15,6 +15,7 @@ const Tag = () => {
         inHand: 0,
         isTook: false,
     });
+    makeRandomArray()
     const [bonesArray, setBonesArray] = useState([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, null, 15]]);
     const isWin = checkCombination(bonesArray);
     useEffect(() => {

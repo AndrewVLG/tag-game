@@ -3,18 +3,78 @@
 const utilits = () => {
     
     const makeRandomArray = () => {
-        let array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
-        let newArr: number[] = [];
-        for(let i = 0; i < 500; i++) {
-            const randomIndex = Math.floor(Math.random() * array.length);
-           if(newArr.find(item => item === array[randomIndex]) === undefined)
-            newArr = [...newArr, array[randomIndex]]
-        };
+        let array2:(number | null)[][] = [
+            [1, 2, 3, 4], 
+            [5, 6, 7, 8], 
+            [9, 10, 11, 12], 
+            [13, 14, 15, null]];
 
-        return  [[newArr[0], newArr[1], newArr[2], newArr[3]], 
-                [newArr[4], newArr[5], newArr[6], newArr[7]], 
-                [newArr[8], newArr[9], newArr[10], newArr[11]], 
-                [newArr[12], newArr[13], newArr[14], null]]
+        const move = () => {
+            const randomAction = Math.round(Math.random() * (4 - 1) + 1);
+            const action: boolean | 'moveLeft' | 'moveRight' | 'moveUp' | 'moveDown' = 
+            (randomAction === 1 && 'moveLeft')
+            || (randomAction === 2 && 'moveRight')
+            || (randomAction === 3 && 'moveUp')
+            || (randomAction === 4 && 'moveDown')
+            let pos = {
+                arrIndex: 0,
+                indexNull: 0,
+            }
+            array2.forEach((arr, i) => {
+                if(arr.find(elem => elem === null) !== undefined) {
+                   pos = {arrIndex: i, indexNull: arr.indexOf(null)}
+                    
+                }
+            });
+
+            if(action === 'moveLeft') {
+                if(array2[pos.arrIndex][pos.indexNull - 1] === undefined) {
+                    array2[pos.arrIndex][pos.indexNull] = array2[pos.arrIndex][pos.indexNull + 1];
+                    array2[pos.arrIndex][pos.indexNull + 1] = null;
+                } else {
+                    array2[pos.arrIndex][pos.indexNull] = array2[pos.arrIndex][pos.indexNull - 1];
+                    array2[pos.arrIndex][pos.indexNull - 1] = null;
+                }
+                
+            }
+            if(action === 'moveRight') {
+                if(array2[pos.arrIndex][pos.indexNull + 1] === undefined) {
+                    array2[pos.arrIndex][pos.indexNull] = array2[pos.arrIndex][pos.indexNull - 1];
+                    array2[pos.arrIndex][pos.indexNull - 1] = null;
+                } else {
+                    array2[pos.arrIndex][pos.indexNull] = array2[pos.arrIndex][pos.indexNull + 1];
+                    array2[pos.arrIndex][pos.indexNull + 1] = null;
+                }
+                
+            }
+
+            try {
+                if(action === 'moveDown') {
+                        array2[pos.arrIndex][pos.indexNull] = array2[pos.arrIndex + 1][pos.indexNull];
+                        array2[pos.arrIndex + 1][pos.indexNull] = null;
+                }
+            } catch {
+                array2[pos.arrIndex][pos.indexNull] = array2[pos.arrIndex - 1][pos.indexNull];
+                array2[pos.arrIndex - 1][pos.indexNull] = null;
+            }
+
+            try {
+                if(action === 'moveUp') {
+                        array2[pos.arrIndex][pos.indexNull] = array2[pos.arrIndex - 1][pos.indexNull];
+                        array2[pos.arrIndex - 1][pos.indexNull] = null;
+                }
+            } catch {
+                array2[pos.arrIndex][pos.indexNull] = array2[pos.arrIndex + 1][pos.indexNull];
+                array2[pos.arrIndex + 1][pos.indexNull] = null;
+            }
+
+        }
+        for(let i = 0; i < 1000; i++) {
+            move();
+        }
+
+        return array2
+
     }
 
     const winningCombination = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, null]
