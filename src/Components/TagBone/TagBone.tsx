@@ -2,23 +2,23 @@ import React from 'react';
 import styles from './TagBone.module.css';
 import Button from '@mui/material/Button';
 import { fontSize } from '@mui/system';
-interface TagBoxProps {
+interface TagBoneProps {
     num: number | null
-    takeBone?: any
+    takeBone?: () => void
+    start: boolean
 }
 
-const TagBone = (props: TagBoxProps) => {
+const TagBone:React.FC<TagBoneProps> = (props) => {
     return (
         <div 
-            onClick={props.takeBone} 
-            className={props.num !== null 
-                ? styles.box 
-                : styles['box-dummy']
-        }>
+            onClick={props.num === null ? props.takeBone : () => {return}}
+            className={styles['box-dummy']}>
         {props.num !== null 
         && <Button 
-            color='warning'
-            variant='text' 
+            onClick={props.takeBone} 
+            disabled={!props.start}
+            color='info'
+            variant='contained' 
             sx={{
                 width: '100%', 
                 height: '100%',

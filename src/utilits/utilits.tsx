@@ -1,8 +1,9 @@
+export type Matrix = (number | null)[][]
 
 
 const utilits = () => {
     
-    const makeRandomArray = () => {
+    const makeRandomArray = (value: number):Matrix => {
         let array2:(number | null)[][] = [
             [1, 2, 3, 4], 
             [5, 6, 7, 8], 
@@ -69,7 +70,7 @@ const utilits = () => {
             }
 
         }
-        for(let i = 0; i < 1000; i++) {
+        for(let i = 0; i < value; i++) {
             move();
         }
 

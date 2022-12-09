@@ -1,11 +1,9 @@
 
 .tag-wrap {
     display: flex;
-
     flex-wrap: wrap;
     align-items: center;
-    margin-top: 15vh;
-    margin-left: 30vw;
+
     height: 30vw;
     width: 30vw;
     background-color: #f7f7ff;

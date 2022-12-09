@@ -1,0 +1,17 @@
+
+.panel {
+    display: flex;
+    flex-direction: column;
+    height: 30vw;
+    width: 15vw;
+    margin-left: 2vw;
+    background-color: #f7f7ff;
+    box-shadow: 4px 4px 26px 0px rgba(34, 60, 80, 0.2);
+}
+.upper-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    height: 50%;
+}

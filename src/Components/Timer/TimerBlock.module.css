@@ -1,0 +1,9 @@
+.block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2vw;
+    width: 15%;
+    margin: 0.1vw;
+
+}

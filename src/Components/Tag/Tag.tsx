@@ -2,27 +2,30 @@ import TagBone from '../TagBone/TagBone';
 import styles from './Tag.module.css';
 import {Snackbar, Alert} from '@mui/material';
 import { useState, useEffect } from 'react';
-import utilits from '../../utilits/utilits';
+import utilits, {Matrix} from '../../utilits/utilits';
+interface TagProps {
+    start: boolean,
+    complexity: number,
+}
 
 interface Pos {
     currentArray: number,
     posInArray: number,
 }
 
-const Tag = () => {
+const Tag: React.FC<TagProps> = (props) => {
     const {makeRandomArray, checkCombination} = utilits();
     const [hand, setHand] = useState({
         inHand: 0,
         isTook: false,
     });
-    makeRandomArray()
-    const [bonesArray, setBonesArray] = useState([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, null, 15]]);
+    const [bonesArray, setBonesArray] = useState<Matrix>([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, null, 15]]);
     const isWin = checkCombination(bonesArray);
     useEffect(() => {
-        setBonesArray(makeRandomArray())
-    }, [])
+        setBonesArray(makeRandomArray(props.complexity))
+    }, [props.complexity])
+    
     const takeBone = (boneNumber: number, array: (number | null)[][]) => {
-        console.log(boneNumber)
         const position: Pos = {
             currentArray: 0,
             posInArray: 0,
@@ -77,10 +80,10 @@ const Tag = () => {
 
     const tagBones = bonesArray.flat().map(bone => {
         if(bone === null) {
-            return <TagBone key={Math.random() * (1000 - 10) + 10} takeBone={() => moveBone(hand.inHand, bonesArray.flat())} num={null}/>;
+            return <TagBone  start={props.start} key={Math.random() * (1000 - 10) + 10} takeBone={() => moveBone(hand.inHand, bonesArray.flat())} num={null}/>;
         };
 
-     return <TagBone key={Math.random() * (1000 - 10) + 10} takeBone={() => takeBone(bone, bonesArray)} num={bone}/>
+     return <TagBone start={props.start} key={Math.random() * (1000 - 10) + 10} takeBone={() => takeBone(bone, bonesArray)} num={bone}/>
     })
     return (
         <div className={styles['tag-wrap']}>

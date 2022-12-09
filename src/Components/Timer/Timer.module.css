@@ -1,0 +1,15 @@
+
+.timer {
+    display: flex;
+    height: 30%;
+    width: 90%;
+    margin: 0.5vw;
+
+}
+.dummy {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1vW;
+    width: 12%;
+}
