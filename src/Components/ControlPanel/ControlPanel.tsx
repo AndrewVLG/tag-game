@@ -29,7 +29,7 @@ const ControlPanel:React.FC<ControlPanelProps> = (props) => {
     return (
         <div className={styles.panel}>
             <div className={styles['upper-panel']}>
-                <Slider onChange={(e:any) => props.onComplexityHandler(e.target.value)} step={null} min={20} max={150} marks={marks} aria-label='Always visible'  sx={{width: '90%'}}/>
+                <Slider disabled={props.start} onChange={(e:any) => props.onComplexityHandler(e.target.value)} step={null} min={20} max={150} marks={marks} aria-label='Always visible'  sx={{width: '90%'}}/>
                 <Button 
                     onClick={props.onStartHandler}
                     sx={{margin: '0.5vw', height: '30%', width: '90%', fontSize: '2rem'}}

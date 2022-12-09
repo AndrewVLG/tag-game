@@ -20,7 +20,7 @@ const Timer: React.FC<TimerProps> = (props) => {
     useEffect(() => {
         clearTimeout(tim);
         setTimer(0)
-    }, [props.start]);
+    }, [props.complexity]);
 
     const counter = (timer: number): TimerValue => {
         const seconds = timer / 1000 % 60;
